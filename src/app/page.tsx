@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import LogoutButton from "./logout-button";
 import CreateCategoryForm from "./create-category-form";
+import CreateNoteForm from "./create-note-form";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
@@ -26,6 +27,15 @@ export default async function Home() {
 
   if (categoriesError) {
     console.log("Could not load categories: ", categoriesError.message);
+  }
+
+  const { data: notes, error: notesError } = await supabase
+    .from("notes")
+    .select("id, title, category_id")
+    .order("created_at", { ascending: true });
+
+  if (notesError) {
+    console.error("Could not load notes:", notesError.message);
   }
 
   return (
@@ -87,18 +97,49 @@ export default async function Home() {
             </span>
           </div>
 
-          <section>
-            <h2>Categories</h2>
+          <section className="mt-10">
+            <h2 className="text-xl font-semibold">Categories</h2>
 
             {categories?.length ? (
-              <ul>
-                {categories.map((category) => (
-                  <li key={category.id}>{category.name}</li>
-                ))}
-              </ul>
+              <div className="mt-4 space-y-5">
+                {categories.map((category) => {
+                  const categoryNotes =
+                    notes?.filter((note) => note.category_id === category.id) ??
+                    [];
+
+                  return (
+                    <article
+                      className="rounded-2xl border border-[#e5e3dd] bg-white p-5"
+                      key={category.id}
+                    >
+                      <h3 className="font-semibold">{category.name}</h3>
+
+                      {categoryNotes.length > 0 ? (
+                        <ul className="mt-3 space-y-2">
+                          {categoryNotes.map((note) => (
+                            <li
+                              className="text-sm text-[#77746b]"
+                              key={note.id}
+                            >
+                              {note.title}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="mt-3 text-sm text-[#8b897f]">
+                          No notes yet.
+                        </p>
+                      )}
+
+                      <CreateNoteForm categoryId={category.id} />
+                    </article>
+                  );
+                })}
+              </div>
             ) : (
-              <p>No categories yet.</p>
+              <p className="mt-3 text-sm text-[#8b897f]">No categories yet.</p>
             )}
+
             <CreateCategoryForm />
           </section>
         </section>
