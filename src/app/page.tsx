@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import LogoutButton from "./logout-button";
 import CreateCategoryForm from "./create-category-form";
 import CreateNoteForm from "./create-note-form";
@@ -121,7 +122,12 @@ export default async function Home() {
                               className="text-sm text-[#77746b]"
                               key={note.id}
                             >
-                              {note.title}
+                              <Link
+                                className="text-sm text-[#77746b] hover:text-[#252525]"
+                                href={`/notes/${note.id}`}
+                              >
+                                {note.title}
+                              </Link>
                             </li>
                           ))}
                         </ul>
