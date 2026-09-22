@@ -2,19 +2,6 @@ import { redirect } from "next/navigation";
 import LogoutButton from "./logout-button";
 import { createClient } from "@/lib/supabase/server";
 
-const notes = [
-  {
-    title: "Welcome to your notes",
-    preview: "A small place for big ideas.",
-    updated: "Just now",
-  },
-  {
-    title: "Ideas to explore",
-    preview: "Collect thoughts, sketches, and links here.",
-    updated: "Yesterday",
-  },
-];
-
 export default async function Home() {
   const supabase = await createClient();
 
@@ -29,6 +16,15 @@ export default async function Home() {
 
   if (error) {
     console.error("Could not load user:", error.message);
+  }
+
+  const { data: categories, error: categoriesError } = await supabase
+    .from("categories")
+    .select("id, name")
+    .order("created_at", { ascending: true });
+
+  if (categoriesError) {
+    console.log("Could not load categories: ", categoriesError.message);
   }
 
   return (
@@ -90,38 +86,19 @@ export default async function Home() {
             </span>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {notes.map((note) => (
-              <article
-                className="min-h-48 rounded-2xl border border-[#e5e3dd] bg-white p-6 shadow-[0_8px_30px_rgba(36,35,31,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(36,35,31,0.08)]"
-                key={note.title}
-              >
-                <div className="flex h-full flex-col justify-between gap-8">
-                  <div>
-                    <h3 className="text-lg font-semibold">{note.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-[#77746b]">
-                      {note.preview}
-                    </p>
-                  </div>
-                  <p className="text-xs text-[#aaa79e]">
-                    Updated {note.updated}
-                  </p>
-                </div>
-              </article>
-            ))}
-            <article
-              className="flex min-h-48 items-center justify-center rounded-2xl border border-dashed border-[#cbc8bf] bg-transparent p-6 text-center"
-              id="canvas"
-            >
-              <div>
-                <p className="text-3xl">✦</p>
-                <h3 className="mt-3 font-medium">Your canvas is waiting</h3>
-                <p className="mt-1 text-sm text-[#8b897f]">
-                  We&apos;ll add a visual canvas in a later step.
-                </p>
-              </div>
-            </article>
-          </div>
+          <section>
+            <h2>Categories</h2>
+
+            {categories?.length ? (
+              <ul>
+                {categories.map((category) => (
+                  <li key={category.id}>{category.name}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No categories yet.</p>
+            )}
+          </section>
         </section>
       </div>
     </main>
