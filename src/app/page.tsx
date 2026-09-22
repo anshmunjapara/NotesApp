@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import LogoutButton from "./logout-button";
+import CreateCategoryForm from "./create-category-form";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
@@ -98,6 +99,7 @@ export default async function Home() {
             ) : (
               <p>No categories yet.</p>
             )}
+            <CreateCategoryForm />
           </section>
         </section>
       </div>
