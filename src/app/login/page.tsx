@@ -37,13 +37,16 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/");
+    router.replace("/");
+    router.refresh();
   }
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f7f7f4] px-6 py-12 text-[#252525]">
       <section className="w-full max-w-md rounded-3xl border border-[#e5e3dd] bg-white p-8 shadow-[0_12px_40px_rgba(36,35,31,0.06)] sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8b897f]">Notes</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8b897f]">
+          Notes
+        </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight">
           {mode === "sign-in" ? "Welcome back" : "Create your account"}
         </h1>
@@ -85,7 +88,11 @@ export default function LoginPage() {
             disabled={isLoading}
             type="submit"
           >
-            {isLoading ? "Please wait…" : mode === "sign-in" ? "Sign in" : "Create account"}
+            {isLoading
+              ? "Please wait…"
+              : mode === "sign-in"
+                ? "Sign in"
+                : "Create account"}
           </button>
         </form>
 
@@ -97,7 +104,9 @@ export default function LoginPage() {
           }}
           type="button"
         >
-          {mode === "sign-in" ? "Need an account? Create one" : "Already have an account? Sign in"}
+          {mode === "sign-in"
+            ? "Need an account? Create one"
+            : "Already have an account? Sign in"}
         </button>
       </section>
     </main>
