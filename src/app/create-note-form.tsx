@@ -45,9 +45,9 @@ export default function CrreateNoteForm({ categoryId }: CreateNoteFormProps) {
   }
 
   return (
-    <form className="mt-4 flex flex-wrap gap-3" onSubmit={handleSubmit}>
+    <form className="mt-4 flex flex-wrap gap-2" onSubmit={handleSubmit}>
       <input
-        className="min-w-0 flex-1 rounded-xl border border-[#dedcd5] bg-white px-4 py-3 outline-none focus:border-[#252525]"
+        className="min-w-0 flex-1 rounded-xl border border-[#e9e8ef] bg-[#f8f7fb] px-3.5 py-2.5 text-sm text-[#25252c] outline-none transition placeholder:text-[#a3a2ad] focus:border-[#a9d94d] focus:bg-white focus:ring-4 focus:ring-[#b8f23f]/15"
         aria-label="Note title"
         placeholder="New note title"
         value={title}
@@ -56,15 +56,15 @@ export default function CrreateNoteForm({ categoryId }: CreateNoteFormProps) {
       />
 
       <button
-        className="rounded-full bg-[#252525] px-5 py-3 text-sm font-medium text-white disabled:opacity-60"
+        className="inline-flex items-center gap-1.5 rounded-xl bg-[#17171d] px-3.5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2b2b33] disabled:cursor-not-allowed disabled:opacity-60"
         type="submit"
         disabled={isSaving}
       >
-        {isSaving ? "Saving…" : "Add note"}
+        {isSaving ? "Saving…" : <><span aria-hidden="true">+</span> Add note</>}
       </button>
 
       {message ? (
-        <p className="w-full text-sm text-[#9a4d3e]" role="status">
+        <p className="w-full text-sm text-[#a64f3e]" role="status">
           {message}
         </p>
       ) : null}
