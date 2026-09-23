@@ -30,7 +30,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-[#f1f0f6] text-[#19191f]">
       <div className="min-h-screen lg:flex">
-        <aside className="border-b border-[#e5e4ec] bg-white px-5 py-5 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[272px] lg:shrink-0 lg:flex-col lg:border-b-0 lg:border-r lg:px-6 lg:py-7">
+        <aside className="border-b border-[#e5e4ec] bg-white px-5 py-5 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-68 lg:shrink-0 lg:flex-col lg:border-b-0 lg:border-r lg:px-6 lg:py-7">
           <Link
             className="flex items-center gap-3"
             href="/"
@@ -361,7 +361,7 @@ export default async function Home() {
               </div>
             </section>
 
-            <footer className="mx-auto mt-10 max-w-[1240px] border-t border-[#e2e1e9] py-5 text-center text-xs text-[#a1a0aa]">
+            <footer className="mx-auto mt-10 max-w-310 border-t border-[#e2e1e9] py-5 text-center text-xs text-[#a1a0aa]">
               A little space to think, wherever you are.
             </footer>
           </div>

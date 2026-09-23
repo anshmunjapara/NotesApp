@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import NoteCanvas from "@/app/note-canvas";
 import { notFound, redirect } from "next/navigation";
-import Link from "next/link";
 
 export default async function NotePage({
   params,
@@ -30,18 +29,10 @@ export default async function NotePage({
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f7f4] px-6 py-8 text-[#252525] sm:px-10">
-      <div className="mx-auto max-w-5xl">
-        <Link className="text-sm text-[#77746b] hover:text-[#252525]" href="/">
-          ← Back to Home
-        </Link>
-
-        <h1 className="mt-8 text-3xl font-semibold tracking-tight">
-          {note.title}
-        </h1>
-
-        <NoteCanvas noteId={note.id} initialDocument={note.canvas_document} />
-      </div>
-    </main>
+    <NoteCanvas
+      noteId={note.id}
+      title={note.title}
+      initialDocument={note.canvas_document}
+    />
   );
 }
