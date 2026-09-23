@@ -21,7 +21,7 @@ export default async function NotePage({
 
   const { data: note, error } = await supabase
     .from("notes")
-    .select("id, title")
+    .select("id, title, canvas_document")
     .eq("id", noteId)
     .single();
 
@@ -40,7 +40,7 @@ export default async function NotePage({
           {note.title}
         </h1>
 
-        <NoteCanvas />
+        <NoteCanvas noteId={note.id} initialDocument={note.canvas_document} />
       </div>
     </main>
   );
